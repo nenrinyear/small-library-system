@@ -2,8 +2,9 @@
 import { NextUIProvider } from "@nextui-org/react";
 import { useRouter } from "next/navigation";
 import HeaderNavigation from "./Navbar";
+import { SessionProvider } from "next-auth/react";
 
-export default function UIProvider({
+export default function Providers({
     children,
 }: Readonly<{
     children: React.ReactNode;
@@ -12,8 +13,10 @@ export default function UIProvider({
 
     return (
         <NextUIProvider navigate={router.push}>
-            <HeaderNavigation />
-            {children}
+            <SessionProvider>
+                <HeaderNavigation />
+                {children}
+            </SessionProvider>
         </NextUIProvider>
     );
 }

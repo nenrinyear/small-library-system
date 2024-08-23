@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { IBM_Plex_Sans_JP } from "next/font/google";
 import "./globals.css";
-import UIProvider from "@/components/NextUIProvider";
+import Providers from "@/components/NextUIProvider";
 
 const ibm_plex_sans = IBM_Plex_Sans_JP({
     display: "swap",
@@ -56,9 +56,9 @@ export default function RootLayout({
     return (
         <html lang="ja" className="light">
             <body className={ibm_plex_sans.className}>
-                <UIProvider>
+                <Providers>
                     {children}
-                </UIProvider>
+                </Providers>
             </body>
         </html>
     );
