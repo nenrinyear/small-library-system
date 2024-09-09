@@ -1,0 +1,48 @@
+services:
+    next-app:
+        container_name: next-app
+        build:
+            context: ./next
+            dockerfile: dev.Dockerfile
+
+        # Set environment variables based on the .env file
+        env_file:
+            - .env
+        volumes:
+            - ./next/src:/app/src
+            - ./next/public:/app/public
+        restart: always
+        ports:
+            - 3000:3000
+        networks:
+            - my_network
+        depends_on:
+            - db
+
+    db:
+        image: mysql:latest
+        container_name: mysql
+        restart: always
+        ports:
+            - 3306:3306
+        env_file:
+            - .env
+        environment:
+            MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+            MYSQL_DATABASE: ${MYSQL_DATABASE}
+            MYSQL_USER: ${MYSQL_USER}
+            MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+        volumes:
+            - ./mysql/conf.d:/etc/mysql/conf.d
+            - ./mysql/init.d:/docker-entrypoint-initdb.d
+            - ./mysql/data:/var/lib/mysql
+        networks:
+            - my_network
+
+    # Add more containers below (nginx, postgres, etc.)
+
+# Define a network, which allows containers to communicate
+# with each other, by using their container name as a hostname
+networks:
+    my_network:
+        external: true
