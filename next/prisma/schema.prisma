@@ -1,0 +1,46 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("MYSQL_DATABASE_URL")
+}
+
+model collection_list {
+  id                     Int       @id @default(autoincrement())
+  qr_id                  String    @db.VarChar(100)
+  name                   String?   @db.VarChar(200)
+  created_by             String?   @db.VarChar(200)
+  created_at             String?   @db.VarChar(200)
+  note                   String?   @db.Text
+  rent_by                String?   @db.VarChar(200)
+  rent_start_date        DateTime? @db.Date
+  estimate_rent_end_date DateTime? @db.Date
+  is_rent                Boolean   @default(false)
+  is_registered          Boolean   @default(false)
+  is_delete              Boolean   @default(false)
+}
+
+model rent_history {
+  id                 Int       @id @default(autoincrement())
+  collection_list_id Int
+  rent_by            String    @db.VarChar(200)
+  start_date         DateTime  @db.Date
+  estimate_end_date  DateTime  @db.Date
+  real_end_date      DateTime? @db.Date
+  last_modified_date DateTime? @db.DateTime(0)
+}
+
+model tag_list {
+  id       Int     @id @default(autoincrement())
+  tag_name String  @db.VarChar(200)
+  genre    Int     @default(0) @db.TinyInt
+  isDelete Boolean @default(false)
+}
+
+model tag_tagging {
+  id                 Int @id @default(autoincrement())
+  collection_list_id Int
+  tag_id             Int
+}
