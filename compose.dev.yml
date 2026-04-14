@@ -1,48 +1,61 @@
 services:
-    next-app:
-        container_name: next-app
-        build:
-            context: ./next
-            dockerfile: dev.Dockerfile
+  frontend:
+    container_name: sls-frontend
+    build:
+      context: ./next
+      dockerfile: dev.Dockerfile
+    env_file:
+      - .env
+    environment:
+      NEXT_PUBLIC_API_BASE_URL: ${NEXT_PUBLIC_API_BASE_URL:-http://localhost:8080}
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./next/src:/app/src
+      - ./next/public:/app/public
+      - ./next/package.json:/app/package.json
+      - ./next/package-lock.json:/app/package-lock.json
+    depends_on:
+      - api
+    restart: unless-stopped
 
-        # Set environment variables based on the .env file
-        env_file:
-            - .env
-        volumes:
-            - ./next/src:/app/src
-            - ./next/public:/app/public
-        restart: always
-        ports:
-            - 3000:3000
-        networks:
-            - my_network
-        depends_on:
-            - db
+  api:
+    container_name: sls-api
+    build:
+      context: ./go-api
+      dockerfile: dev.Dockerfile
+    env_file:
+      - .env
+    environment:
+      API_PORT: ${API_PORT:-8080}
+      MYSQL_HOST: db
+      MYSQL_PORT: 3306
+      ALLOWED_ORIGINS: ${ALLOWED_ORIGINS:-http://localhost:3000}
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./go-api/cmd:/app/cmd
+      - ./go-api/internal:/app/internal
+      - ./go-api/go.mod:/app/go.mod
+      - ./go-api/go.sum:/app/go.sum
+    depends_on:
+      - db
+    restart: unless-stopped
 
-    db:
-        image: mysql:latest
-        container_name: mysql
-        restart: always
-        ports:
-            - 3306:3306
-        env_file:
-            - .env
-        environment:
-            MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-            MYSQL_DATABASE: ${MYSQL_DATABASE}
-            MYSQL_USER: ${MYSQL_USER}
-            MYSQL_PASSWORD: ${MYSQL_PASSWORD}
-        volumes:
-            - ./mysql/conf.d:/etc/mysql/conf.d
-            - ./mysql/init.d:/docker-entrypoint-initdb.d
-            - ./mysql/data:/var/lib/mysql
-        networks:
-            - my_network
-
-    # Add more containers below (nginx, postgres, etc.)
-
-# Define a network, which allows containers to communicate
-# with each other, by using their container name as a hostname
-networks:
-    my_network:
-        external: true
+  db:
+    image: mysql:9.0
+    container_name: sls-db
+    env_file:
+      - .env
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./mysql/conf.d:/etc/mysql/conf.d
+      - ./mysql/init.d:/docker-entrypoint-initdb.d
+      - ./mysql/data:/var/lib/mysql
+    restart: unless-stopped
