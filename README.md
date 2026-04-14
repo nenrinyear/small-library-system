@@ -5,8 +5,8 @@ Go (Echo) + Next.js (Chakra UI v3) で構成した QR ベースの所蔵物管�
 ## 構成
 
 - Frontend: `next/` (Next.js 14 + Chakra UI v3)
-- Backend: `go-api/` (Go + Echo + GORM + MySQL)
-- DB schema/init: `go-api/migrations/`, `mysql/init.d/`
+- Backend: `api/` (Go + Echo + GORM + MySQL)
+- DB schema/init: `api/migrations/`, `mysql/init.d/`
 
 ## 開発起動
 
@@ -25,3 +25,7 @@ Go (Echo) + Next.js (Chakra UI v3) で構成した QR ベースの所蔵物管�
 - `ADMIN_API_TOKEN`
 - `MYSQL_DATABASE`, `MYSQL_USER`, `MYSQL_PASSWORD`
 
+## 仕様書
+
+- 本ライン要件: `docs/mainline-requirements.md`
+- 旧実装読解メモ: `docs/old-php-replacement-requirements.md`

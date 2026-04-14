@@ -3,7 +3,7 @@ package store
 import (
 	"time"
 
-	"github.com/nenrinyear/small-library-system/go-api/internal/domain"
+	"github.com/nenrinyear/small-library-system/api/internal/domain"
 )
 
 type itemModel struct {

@@ -1,4 +1,4 @@
-module github.com/nenrinyear/small-library-system/go-api
+module github.com/nenrinyear/small-library-system/api
 
 go 1.26
 

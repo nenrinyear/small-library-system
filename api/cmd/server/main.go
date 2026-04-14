@@ -9,8 +9,8 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/nenrinyear/small-library-system/go-api/internal/config"
-	"github.com/nenrinyear/small-library-system/go-api/internal/server"
+	"github.com/nenrinyear/small-library-system/api/internal/config"
+	"github.com/nenrinyear/small-library-system/api/internal/server"
 	gormmysql "gorm.io/driver/mysql"
 	"gorm.io/gorm"
 )

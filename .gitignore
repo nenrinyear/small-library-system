@@ -40,10 +40,10 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-# go-api build artifacts
-/go-api/server
-/go-api/bin/
-/go-api/dist/
-/go-api/tmp/
-/go-api/coverage.out
-/go-api/*.test
+# api build artifacts
+/api/server
+/api/bin/
+/api/dist/
+/api/tmp/
+/api/coverage.out
+/api/*.test

@@ -10,7 +10,7 @@ import (
 	"time"
 
 	"github.com/go-sql-driver/mysql"
-	"github.com/nenrinyear/small-library-system/go-api/internal/domain"
+	"github.com/nenrinyear/small-library-system/api/internal/domain"
 	"gorm.io/gorm"
 	"gorm.io/gorm/clause"
 )

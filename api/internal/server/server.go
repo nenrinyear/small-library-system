@@ -9,9 +9,9 @@ import (
 
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
-	"github.com/nenrinyear/small-library-system/go-api/internal/auth"
-	"github.com/nenrinyear/small-library-system/go-api/internal/config"
-	"github.com/nenrinyear/small-library-system/go-api/internal/store"
+	"github.com/nenrinyear/small-library-system/api/internal/auth"
+	"github.com/nenrinyear/small-library-system/api/internal/config"
+	"github.com/nenrinyear/small-library-system/api/internal/store"
 	"gorm.io/gorm"
 )
 

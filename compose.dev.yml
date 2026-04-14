@@ -22,7 +22,7 @@ services:
   api:
     container_name: sls-api
     build:
-      context: ./go-api
+      context: ./api
       dockerfile: dev.Dockerfile
     env_file:
       - .env
@@ -34,10 +34,10 @@ services:
     ports:
       - "8080:8080"
     volumes:
-      - ./go-api/cmd:/app/cmd
-      - ./go-api/internal:/app/internal
-      - ./go-api/go.mod:/app/go.mod
-      - ./go-api/go.sum:/app/go.sum
+      - ./api/cmd:/app/cmd
+      - ./api/internal:/app/internal
+      - ./api/go.mod:/app/go.mod
+      - ./api/go.sum:/app/go.sum
     depends_on:
       - db
     restart: unless-stopped
