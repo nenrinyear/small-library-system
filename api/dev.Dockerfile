@@ -9,6 +9,7 @@ RUN go mod download
 
 COPY cmd ./cmd
 COPY internal ./internal
+COPY migrations ./migrations
 
 EXPOSE 8080
 

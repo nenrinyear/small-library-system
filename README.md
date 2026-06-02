@@ -6,12 +6,14 @@ Go (Echo) + Next.js (Chakra UI v3) で構成した QR ベースの所蔵物管�
 
 - Frontend: `next/` (Next.js 14 + Chakra UI v3)
 - Backend: `api/` (Go + Echo + GORM + MySQL)
-- DB schema/init: `api/migrations/`, `mysql/init.d/`
+- DB schema: `api/migrations/`
 
 ## 開発起動
 
 1. `.env.example` を `.env` にコピーして値を調整
 2. `docker compose -f compose.dev.yml up --build`
+
+API 起動時に `api/migrations/` の SQL migration が自動適用されます。
 
 公開ポート:
 

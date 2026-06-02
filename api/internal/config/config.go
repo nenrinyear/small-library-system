@@ -44,12 +44,20 @@ func Load() Config {
 }
 
 func (c Config) MySQLDSN() string {
+	return c.mysqlDSN(false)
+}
+
+func (c Config) MySQLMigrationDSN() string {
+	return c.mysqlDSN(true)
+}
+
+func (c Config) mysqlDSN(multiStatements bool) string {
 	parseTime := "false"
 	if c.DBParseTime {
 		parseTime = "true"
 	}
 
-	return fmt.Sprintf("%s:%s@tcp(%s:%d)/%s?charset=utf8mb4&parseTime=%s&loc=Asia%%2FTokyo&tls=%s",
+	dsn := fmt.Sprintf("%s:%s@tcp(%s:%d)/%s?charset=utf8mb4&parseTime=%s&loc=Asia%%2FTokyo&tls=%s",
 		c.DBUser,
 		c.DBPassword,
 		c.DBHost,
@@ -58,6 +66,10 @@ func (c Config) MySQLDSN() string {
 		parseTime,
 		c.DBTLS,
 	)
+	if multiStatements {
+		dsn += "&multiStatements=true"
+	}
+	return dsn
 }
 
 func stringEnv(key, fallback string) string {
